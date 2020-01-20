@@ -58,24 +58,11 @@ namespace SensorDisplay
                 LOG.BeginInvoke((MethodInvoker)delegate { LOG.AppendText("Received: " + recvData); });
 
                 // initialization of chart update
-                double data;
-                bool result = Double.TryParse(recvData, out data);
-                if (result)
-                {
-                    medicion m = new medicion(recvData, tag, data);
-                    if (tag == null)
-                    {
-                        m = new medicion(recvData, " ", data);
-                    }
-                    else
-                    {
-                        m = new medicion(recvData, tag, data);
-                        tag = null;
-                    }
-                    //datarecorded.Add(recvData);
-                    this.Invoke((MethodInvoker)delegate { updatechart(m); });
+                int data = Int32.Parse(recvData);
+                medicion m = new medicion(recvData, tag, data);
+                tag = null;
 
-                }
+                this.Invoke((MethodInvoker)delegate { updatechart(m); });
             }
             catch
             {
@@ -87,7 +74,16 @@ namespace SensorDisplay
             public medicion(string valor, string etiqueta, double numvalor)
             {
                 this.valor = valor;
-                this.etiqueta = etiqueta;
+                if (etiqueta != null)
+                {
+                    this.etiqueta = etiqueta;
+                    etiqueta = null;
+                }
+                else
+                {
+                    this.etiqueta = " ";
+                    etiqueta = null;
+                }
                 this.numvalor = numvalor;
             }
 
@@ -104,7 +100,7 @@ namespace SensorDisplay
 
             // se inicializa el puerto con las opciones basicas
             aSerialPort.PortName = "COM3";
-            aSerialPort.BaudRate = 115200;
+            aSerialPort.BaudRate = 9600;
             aSerialPort.Parity = Parity.None;
             aSerialPort.StopBits = StopBits.One;
             aSerialPort.DataBits = 8;
@@ -232,44 +228,15 @@ namespace SensorDisplay
         {
             tag = TagTextBox.Text;
         }
-
-        private void SaveButton_Click(object sender, EventArgs e)
+        private void LOG_TextChanged(object sender, EventArgs e) // para que cada vez que se agregue algo al log, se vea en pantalla
         {
-            if (aSerialPort.IsOpen)
-            {
-                LOG.BeginInvoke((MethodInvoker)delegate { LOG.AppendText("Error, detenga la prueba antes de guardar \n"); });
-            }
-            else
-            {
-                try
-                {
-                    if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-                    {
-                        if (File.Exists(saveFileDialog1.FileName))
-                        {
-                            File.Delete(saveFileDialog1.FileName);
-                        }
-                    }
-                    using (StreamWriter sw = File.CreateText(saveFileDialog1.FileName))
-                    {
-                        foreach (medicion m in recorded)
-                        {
-                            sw.WriteLine(m.valor.TrimEnd() + "," + m.etiqueta);
-                        }
-                    }
-                }
-                catch //(Exception Ex)
-                {
-                    //MessageBox.Show(Ex.ToString());
-                    MessageBox.Show("Error Inesperado Escribiendo Archivo"); ;
-                }
-
-            }
-
-
+            // set the current caret position to the end
+            LOG.SelectionStart = LOG.Text.Length;
+            // scroll it automatically
+            LOG.ScrollToCaret();
         }
 
-        private void LoadButton_Click(object sender, EventArgs e)
+        private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
             if (!aSerialPort.IsOpen)
@@ -310,15 +277,59 @@ namespace SensorDisplay
                     recorded.Clear();
                 }
             }
-        }
-        private void LOG_TextChanged(object sender, EventArgs e) // para que cada vez que se agregue algo al log, se vea en pantalla
-        {
-            // set the current caret position to the end
-            LOG.SelectionStart = LOG.Text.Length;
-            // scroll it automatically
-            LOG.ScrollToCaret();
-        }
+        } // metodo para abrir prueba
 
-        
+        private void guardarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (aSerialPort.IsOpen)
+            {
+                LOG.BeginInvoke((MethodInvoker)delegate { LOG.AppendText("Error, detenga la prueba antes de guardar \n"); });
+            }
+            else
+            {
+                try
+                {
+                    if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                    {
+                        if (File.Exists(saveFileDialog1.FileName))
+                        {
+                            File.Delete(saveFileDialog1.FileName);
+                        }
+                    }
+                    using (StreamWriter sw = File.CreateText(saveFileDialog1.FileName))
+                    {
+                        foreach (medicion m in recorded)
+                        {
+                            sw.WriteLine(m.valor.TrimEnd() + "," + m.etiqueta);
+                        }
+                    }
+                }
+                catch //(Exception Ex)
+                {
+                    //MessageBox.Show(Ex.ToString());
+                    MessageBox.Show("Error Inesperado Escribiendo Archivo"); ;
+                }
+
+            }
+
+        }  // metodo para guardar prueba
+
+        private void ScreenShot_Click(object sender, EventArgs e)
+        {
+            using (var bmp = new Bitmap(this.Width, this.Height))
+            {
+                try
+                {
+                    this.DrawToBitmap(bmp, new Rectangle(0, 0, bmp.Width, bmp.Height));
+                    String path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+                    bmp.Save(@path+"\\"+ ScreenTextBox.Text+".png");
+                    LOG.BeginInvoke((MethodInvoker)delegate { LOG.AppendText("Captura de Pantalla Guardada en: "+path+"\n"); });
+                }
+                catch
+                {
+                    LOG.BeginInvoke((MethodInvoker)delegate { LOG.AppendText("Error en Captura \n"); });
+                }
+            }
+        }
     }
 }

@@ -16,7 +16,8 @@ namespace SensorDisplay
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new EEGForm());
+            Application.Run(new MainForm());
+            
         }
     }
 }
