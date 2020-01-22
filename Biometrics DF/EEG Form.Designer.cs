@@ -56,6 +56,7 @@
             this.ScreenTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.s = new System.IO.Ports.SerialPort(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -71,7 +72,7 @@
             this.chart1.ChartAreas.Add(chartArea2);
             legend2.Name = "Legend1";
             this.chart1.Legends.Add(legend2);
-            this.chart1.Location = new System.Drawing.Point(1, 33);
+            this.chart1.Location = new System.Drawing.Point(43, 33);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
             series2.ChartArea = "ChartArea1";
@@ -81,7 +82,7 @@
             series2.Legend = "Legend1";
             series2.Name = "Series1";
             this.chart1.Series.Add(series2);
-            this.chart1.Size = new System.Drawing.Size(1707, 369);
+            this.chart1.Size = new System.Drawing.Size(1573, 369);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
@@ -155,10 +156,6 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "SELECCIONE EL PUERTO";
             // 
-            // aSerialPort
-            // 
-            this.aSerialPort.BaudRate = 500000;
-            // 
             // ClearButton
             // 
             this.ClearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -225,7 +222,7 @@
             this.testToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1818, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(1818, 28);
             this.menuStrip1.TabIndex = 14;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -236,7 +233,7 @@
             this.guardarToolStripMenuItem,
             this.screenShotF12ToolStripMenuItem});
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(73, 26);
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(73, 24);
             this.testToolStripMenuItem.Text = "Archivo";
             // 
             // openFileToolStripMenuItem
@@ -356,6 +353,7 @@
         private System.Windows.Forms.TextBox ScreenTextBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.IO.Ports.SerialPort s;
     }
 }
 

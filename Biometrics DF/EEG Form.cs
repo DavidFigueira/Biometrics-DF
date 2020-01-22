@@ -47,25 +47,26 @@ namespace SensorDisplay
             recorded.Add(data);
             chart1.ChartAreas[0].AxisX.ScaleView.Position = chart1.Series["Series1"].Points.Count - 500;// ubica siempre la pantalla al final
         }
+
+
         // proceso que maneja la llegada de data al puerto serial
         private void serialDataReceivedEventHandler(object sender, SerialDataReceivedEventArgs e)
         {
             try // en caso de que ya este proceso haya iniciado y se precione el boton de cerrar el puerto, produce un error
             {
                 SerialPort sData = sender as SerialPort;
-                string recvData = sData.ReadLine();
-
-                LOG.BeginInvoke((MethodInvoker)delegate { LOG.AppendText("Received: " + recvData); });
-
+                String recvdata = sData.ReadLine();
+                LOG.BeginInvoke((MethodInvoker)delegate { LOG.AppendText("Received: " + recvdata); });
                 // initialization of chart update
-                int data = Int32.Parse(recvData);
-                medicion m = new medicion(recvData, tag, data);
+                double data;
+                Double.TryParse(recvdata, out data);
+                this.Invoke((MethodInvoker)delegate { updatechart(new medicion("asd", tag, data)); });
                 tag = null;
-
-                this.Invoke((MethodInvoker)delegate { updatechart(m); });
             }
-            catch
+            catch ( Exception ex)
             {
+                MessageBox.Show(ex.Message);
+                //LOG.BeginInvoke((MethodInvoker)delegate { LOG.AppendText("error \n"); });
                 //MessageBox.Show("failed");//do nothing ... mensaje de prueba
             }
         }
@@ -98,7 +99,7 @@ namespace SensorDisplay
             chart1.ChartAreas[0].AxisY.Maximum = 1100;
             chart1.ChartAreas[0].AxisY.Minimum = 0;
 
-            // se inicializa el puerto con las opciones basicas
+            //se inicializa el puerto con las opciones basicas
             aSerialPort.PortName = "COM3";
             aSerialPort.BaudRate = 9600;
             aSerialPort.Parity = Parity.None;
@@ -263,8 +264,7 @@ namespace SensorDisplay
                                     string[] datos = reading.Split(',');
                                     double data;
                                     Double.TryParse(datos[0], out data);
-                                    medicion m = new medicion(datos[0], datos[1], data);
-                                    updatechart(m);
+                                    updatechart(new medicion(datos[0], datos[1], data));
                                 }
                             }
                             //codigo para leer
@@ -331,5 +331,8 @@ namespace SensorDisplay
                 }
             }
         }
+
+       
     }
+
 }
