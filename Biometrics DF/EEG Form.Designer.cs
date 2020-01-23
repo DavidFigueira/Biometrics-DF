@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.LOG = new System.Windows.Forms.RichTextBox();
             this.StartButton = new System.Windows.Forms.Button();
@@ -51,12 +51,11 @@
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.guardarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.screenShotF12ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ScreenShotButton = new System.Windows.Forms.Button();
             this.ScreenTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.s = new System.IO.Ports.SerialPort(this.components);
+            this.RefreshButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -68,21 +67,23 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chart1.BackImageAlignment = System.Windows.Forms.DataVisualization.Charting.ChartImageAlignmentStyle.Top;
             this.chart1.BorderSkin.BackColor = System.Drawing.Color.Transparent;
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            chartArea1.CursorX.LineColor = System.Drawing.Color.Black;
+            chartArea1.CursorX.SelectionColor = System.Drawing.Color.Black;
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(43, 33);
             this.chart1.Name = "chart1";
-            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series2.Color = System.Drawing.Color.Black;
-            series2.IsVisibleInLegend = false;
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chart1.Series.Add(series2);
-            this.chart1.Size = new System.Drawing.Size(1573, 369);
+            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series1.Color = System.Drawing.Color.Black;
+            series1.IsVisibleInLegend = false;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
+            this.chart1.Size = new System.Drawing.Size(1573, 398);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
@@ -100,7 +101,7 @@
             // StartButton
             // 
             this.StartButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.StartButton.Location = new System.Drawing.Point(43, 485);
+            this.StartButton.Location = new System.Drawing.Point(43, 525);
             this.StartButton.Name = "StartButton";
             this.StartButton.Size = new System.Drawing.Size(228, 51);
             this.StartButton.TabIndex = 2;
@@ -111,7 +112,7 @@
             // StopButton
             // 
             this.StopButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.StopButton.Location = new System.Drawing.Point(43, 559);
+            this.StopButton.Location = new System.Drawing.Point(43, 599);
             this.StopButton.Name = "StopButton";
             this.StopButton.Size = new System.Drawing.Size(228, 51);
             this.StopButton.TabIndex = 3;
@@ -122,7 +123,7 @@
             // ShockButton
             // 
             this.ShockButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ShockButton.Location = new System.Drawing.Point(289, 485);
+            this.ShockButton.Location = new System.Drawing.Point(289, 525);
             this.ShockButton.Name = "ShockButton";
             this.ShockButton.Size = new System.Drawing.Size(228, 51);
             this.ShockButton.TabIndex = 4;
@@ -140,9 +141,9 @@
             "COM3",
             "COM4",
             "COM5"});
-            this.ComPortComboBox.Location = new System.Drawing.Point(244, 434);
+            this.ComPortComboBox.Location = new System.Drawing.Point(43, 485);
             this.ComPortComboBox.Name = "ComPortComboBox";
-            this.ComPortComboBox.Size = new System.Drawing.Size(252, 24);
+            this.ComPortComboBox.Size = new System.Drawing.Size(228, 24);
             this.ComPortComboBox.TabIndex = 5;
             this.ComPortComboBox.SelectedIndexChanged += new System.EventHandler(this.ComPortComboBox_SelectedIndexChanged);
             // 
@@ -150,7 +151,7 @@
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(40, 441);
+            this.label1.Location = new System.Drawing.Point(40, 454);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(177, 17);
             this.label1.TabIndex = 6;
@@ -159,7 +160,7 @@
             // ClearButton
             // 
             this.ClearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ClearButton.Location = new System.Drawing.Point(289, 559);
+            this.ClearButton.Location = new System.Drawing.Point(289, 599);
             this.ClearButton.Name = "ClearButton";
             this.ClearButton.Size = new System.Drawing.Size(228, 51);
             this.ClearButton.TabIndex = 7;
@@ -170,7 +171,7 @@
             // TagTextBox
             // 
             this.TagTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.TagTextBox.Location = new System.Drawing.Point(43, 644);
+            this.TagTextBox.Location = new System.Drawing.Point(43, 684);
             this.TagTextBox.Name = "TagTextBox";
             this.TagTextBox.Size = new System.Drawing.Size(228, 22);
             this.TagTextBox.TabIndex = 8;
@@ -178,7 +179,7 @@
             // TagButton
             // 
             this.TagButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.TagButton.Location = new System.Drawing.Point(289, 630);
+            this.TagButton.Location = new System.Drawing.Point(289, 670);
             this.TagButton.Name = "TagButton";
             this.TagButton.Size = new System.Drawing.Size(228, 51);
             this.TagButton.TabIndex = 9;
@@ -230,8 +231,7 @@
             // 
             this.testToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openFileToolStripMenuItem,
-            this.guardarToolStripMenuItem,
-            this.screenShotF12ToolStripMenuItem});
+            this.guardarToolStripMenuItem});
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
             this.testToolStripMenuItem.Size = new System.Drawing.Size(73, 24);
             this.testToolStripMenuItem.Text = "Archivo";
@@ -239,26 +239,21 @@
             // openFileToolStripMenuItem
             // 
             this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
-            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(203, 26);
+            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.openFileToolStripMenuItem.Text = "Abrir";
             this.openFileToolStripMenuItem.Click += new System.EventHandler(this.openFileToolStripMenuItem_Click);
             // 
             // guardarToolStripMenuItem
             // 
             this.guardarToolStripMenuItem.Name = "guardarToolStripMenuItem";
-            this.guardarToolStripMenuItem.Size = new System.Drawing.Size(203, 26);
+            this.guardarToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.guardarToolStripMenuItem.Text = "Guardar";
             this.guardarToolStripMenuItem.Click += new System.EventHandler(this.guardarToolStripMenuItem_Click);
             // 
-            // screenShotF12ToolStripMenuItem
-            // 
-            this.screenShotF12ToolStripMenuItem.Name = "screenShotF12ToolStripMenuItem";
-            this.screenShotF12ToolStripMenuItem.Size = new System.Drawing.Size(203, 26);
-            this.screenShotF12ToolStripMenuItem.Text = "ScreenShot (F12)";
-            // 
             // ScreenShotButton
             // 
-            this.ScreenShotButton.Location = new System.Drawing.Point(289, 699);
+            this.ScreenShotButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ScreenShotButton.Location = new System.Drawing.Point(289, 739);
             this.ScreenShotButton.Name = "ScreenShotButton";
             this.ScreenShotButton.Size = new System.Drawing.Size(228, 46);
             this.ScreenShotButton.TabIndex = 15;
@@ -268,15 +263,17 @@
             // 
             // ScreenTextBox
             // 
-            this.ScreenTextBox.Location = new System.Drawing.Point(43, 711);
+            this.ScreenTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ScreenTextBox.Location = new System.Drawing.Point(43, 751);
             this.ScreenTextBox.Name = "ScreenTextBox";
             this.ScreenTextBox.Size = new System.Drawing.Size(228, 22);
             this.ScreenTextBox.TabIndex = 16;
             // 
             // label3
             // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(40, 624);
+            this.label3.Location = new System.Drawing.Point(40, 664);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(134, 17);
             this.label3.TabIndex = 17;
@@ -284,18 +281,31 @@
             // 
             // label4
             // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(40, 691);
+            this.label4.Location = new System.Drawing.Point(40, 731);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(132, 17);
             this.label4.TabIndex = 18;
             this.label4.Text = "Nombre de Captura";
+            // 
+            // RefreshButton
+            // 
+            this.RefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.RefreshButton.Location = new System.Drawing.Point(289, 454);
+            this.RefreshButton.Name = "RefreshButton";
+            this.RefreshButton.Size = new System.Drawing.Size(228, 55);
+            this.RefreshButton.TabIndex = 19;
+            this.RefreshButton.Text = "REFRESCAR LISTA DE PUERTOS";
+            this.RefreshButton.UseVisualStyleBackColor = true;
+            this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
             // 
             // EEGForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1818, 870);
+            this.Controls.Add(this.RefreshButton);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.ScreenTextBox);
@@ -348,12 +358,11 @@
         private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem guardarToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem screenShotF12ToolStripMenuItem;
         private System.Windows.Forms.Button ScreenShotButton;
         private System.Windows.Forms.TextBox ScreenTextBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.IO.Ports.SerialPort s;
+        private System.Windows.Forms.Button RefreshButton;
     }
 }
 

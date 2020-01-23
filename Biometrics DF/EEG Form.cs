@@ -41,11 +41,14 @@ namespace SensorDisplay
             }
         }
 
-        private void updatechart(medicion data)
+        private void updatechart(List<medicion> mediciones)
         {
-            chart1.Series["Series1"].Points.AddXY(data.etiqueta, data.numvalor);
-            recorded.Add(data);
-            chart1.ChartAreas[0].AxisX.ScaleView.Position = chart1.Series["Series1"].Points.Count - 500;// ubica siempre la pantalla al final
+            foreach (medicion data in mediciones){
+                chart1.Series["Series1"].Points.AddXY(data.etiqueta, data.numvalor);
+                recorded.Add(data);
+                chart1.ChartAreas[0].AxisX.ScaleView.Position = chart1.Series["Series1"].Points.Count - 500;// ubica siempre la pantalla al final
+            }
+            
         }
 
 
@@ -54,36 +57,41 @@ namespace SensorDisplay
         {
             try // en caso de que ya este proceso haya iniciado y se precione el boton de cerrar el puerto, produce un error
             {
+                List<medicion> mediciones = new List<medicion>();
                 SerialPort sData = sender as SerialPort;
-                String recvdata = sData.ReadLine();
-                LOG.BeginInvoke((MethodInvoker)delegate { LOG.AppendText("Received: " + recvdata); });
-                // initialization of chart update
+                String recvdata;
                 double data;
-                Double.TryParse(recvdata, out data);
-                this.Invoke((MethodInvoker)delegate { updatechart(new medicion("asd", tag, data)); });
-                tag = null;
+
+                // para lograr mayor eficiencia, se leen la mayor cantidad de datos a la vez antes de actualizar la tabla
+                while (sData.BytesToRead >= 5)  // mientras hayan mas de 5 bytes en el buffer, se pueden leer mas datos
+                {
+                    recvdata = sData.ReadLine();
+                    if(Double.TryParse(recvdata, out data))
+                    {
+                        mediciones.Add(new medicion(recvdata, tag, data));
+                        tag = null;
+                    }
+
+                }
+                this.Invoke((MethodInvoker)delegate { updatechart(mediciones); });
             }
             catch ( Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                //LOG.BeginInvoke((MethodInvoker)delegate { LOG.AppendText("error \n"); });
-                //MessageBox.Show("failed");//do nothing ... mensaje de prueba
             }
         }
         public class medicion // clase medicion, tiene String valor, y etiqueta para guardar en txt, y double para la grafica
         {
-            public medicion(string valor, string etiqueta, double numvalor)
+            public medicion(string valor, string etiquetain, double numvalor)
             {
                 this.valor = valor;
-                if (etiqueta != null)
+                if (etiquetain != null)
                 {
-                    this.etiqueta = etiqueta;
-                    etiqueta = null;
+                    this.etiqueta = etiquetain;
                 }
                 else
                 {
                     this.etiqueta = " ";
-                    etiqueta = null;
                 }
                 this.numvalor = numvalor;
             }
@@ -100,7 +108,7 @@ namespace SensorDisplay
             chart1.ChartAreas[0].AxisY.Minimum = 0;
 
             //se inicializa el puerto con las opciones basicas
-            aSerialPort.PortName = "COM3";
+            aSerialPort.PortName = "COM1";
             aSerialPort.BaudRate = 9600;
             aSerialPort.Parity = Parity.None;
             aSerialPort.StopBits = StopBits.One;
@@ -119,6 +127,8 @@ namespace SensorDisplay
             chart1.ChartAreas[0].AxisX.MinorTickMark.Enabled = false;
             chart1.ChartAreas[0].AxisY.MinorTickMark.Enabled = false;
             chart1.ChartAreas[0].AxisY.LabelStyle.Enabled = false;
+            //chart1.ChartAreas[0].AxisX.LabelStyle.Enabled = true;
+            //chart1.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.Black;
 
             chart1.ChartAreas[0].AxisX.Interval = 1;
             chart1.ChartAreas[0].AxisY.Interval = 1;
@@ -131,9 +141,21 @@ namespace SensorDisplay
             chart1.ChartAreas[0].AxisY.ScrollBar.IsPositionedInside = true;
             chart1.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
 
+
             chart1.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
             chart1.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
             chart1.ChartAreas[0].AxisX.ScaleView.Size = 500; //la porcion o cantidad de muestras que se ven en pantalla
+
+            ComPortComboBox.Items.Clear(); // proceso para cargar los puertos disponibles
+            string[] ports = SerialPort.GetPortNames();
+            foreach (string port in ports)
+            {
+                ComPortComboBox.Items.Add(port);
+            }
+            if (ports[0] != null)
+            {
+                ComPortComboBox.Text = ports[0];
+            }
 
         }
         // 
@@ -255,6 +277,7 @@ namespace SensorDisplay
                         {
                             recorded.Clear();
                             chart1.Series["Series1"].Points.Clear();
+                            List<medicion> mediciones = new List<medicion>();
                             //==recorded.Clear(); // borra lo que haya
                             using (StreamReader sr = File.OpenText(openFileDialog1.FileName))
                             {
@@ -264,8 +287,10 @@ namespace SensorDisplay
                                     string[] datos = reading.Split(',');
                                     double data;
                                     Double.TryParse(datos[0], out data);
-                                    updatechart(new medicion(datos[0], datos[1], data));
+                                    mediciones.Add(new medicion(datos[0], datos[1], data));
+                                  
                                 }
+                                updatechart(mediciones);
                             }
                             //codigo para leer
                         }
@@ -332,7 +357,21 @@ namespace SensorDisplay
             }
         }
 
-       
+        private void RefreshButton_Click(object sender, EventArgs e) // metodo para actualizar la lista de puertos disponibles
+        {
+            ComPortComboBox.Items.Clear();
+            string[] ports = SerialPort.GetPortNames();
+            foreach (string  port in ports)
+            {
+                ComPortComboBox.Items.Add(port);
+            }
+            if (ports[0] != null)
+            {
+                ComPortComboBox.Text = ports[0];
+            }
+            
+        }
     }
-
+   
+        
 }
