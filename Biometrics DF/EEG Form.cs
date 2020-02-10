@@ -20,6 +20,8 @@ namespace SensorDisplay
 
         List<medicion> recorded = new List<medicion>(); // lista que guarda las mediciones
         String tag = null; // etiqueta actual a colocar
+        int count = 100;
+        int timer = 0;
         private void StartButton_Click(object sender, EventArgs e)
         {
 
@@ -32,6 +34,8 @@ namespace SensorDisplay
                     aSerialPort.DiscardInBuffer();
                     recorded.Clear();
                     chart1.Series["Series1"].Points.Clear();
+                    count = 100;
+                    timer = 0;
                     tag = null;
                 }
             }
@@ -44,9 +48,22 @@ namespace SensorDisplay
         private void updatechart(List<medicion> mediciones)
         {
             foreach (medicion data in mediciones){
-                chart1.Series["Series1"].Points.AddXY(data.etiqueta, data.numvalor);
-                recorded.Add(data);
-                chart1.ChartAreas[0].AxisX.ScaleView.Position = chart1.Series["Series1"].Points.Count - 500;// ubica siempre la pantalla al final
+                if(count == 100)
+                {
+                    chart1.Series["Series1"].Points.AddXY(timer.ToString(), data.numvalor);
+                    recorded.Add(data);
+                    timer++;
+                    count = 0;
+                    chart1.ChartAreas[0].AxisX.ScaleView.Position = chart1.Series["Series1"].Points.Count - 300;
+                }
+                else
+                {
+                    count++;
+                    chart1.Series["Series1"].Points.AddXY(data.etiqueta, data.numvalor);
+                    recorded.Add(data);
+                    chart1.ChartAreas[0].AxisX.ScaleView.Position = chart1.Series["Series1"].Points.Count - 300;// ubica siempre la pantalla al final
+                }
+                
             }
             
         }
@@ -117,26 +134,30 @@ namespace SensorDisplay
 
             // se inicializa la Chart, eliminando los bordes
             chart1.ChartAreas[0].AxisX.LineWidth = 0;
-            chart1.ChartAreas[0].AxisY.LineWidth = 0;
-            chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
-            chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+            chart1.ChartAreas[0].AxisY.LineWidth = 1;
+            chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = true;
+            chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = true;
             chart1.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
             chart1.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
             chart1.ChartAreas[0].AxisX.MajorTickMark.Enabled = false;
             chart1.ChartAreas[0].AxisY.MajorTickMark.Enabled = false;
             chart1.ChartAreas[0].AxisX.MinorTickMark.Enabled = false;
             chart1.ChartAreas[0].AxisY.MinorTickMark.Enabled = false;
-            chart1.ChartAreas[0].AxisY.LabelStyle.Enabled = false;
-            //chart1.ChartAreas[0].AxisX.LabelStyle.Enabled = true;
-            //chart1.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.Black;
+            chart1.ChartAreas[0].AxisY.LabelStyle.Enabled = true;
+            chart1.ChartAreas[0].AxisX.LabelStyle.Enabled = true;
+            chart1.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.Black;
+            chart1.ChartAreas[0].AxisY.Title = "Amplitud (V x 200) ";
+            chart1.ChartAreas[0].AxisX.Title = "Tiempo (s)";
+            chart1.ChartAreas[0].AxisY.MajorGrid.LineWidth = 1;
+            chart1.ChartAreas[0].AxisX.MajorGrid.LineWidth = 0;
 
             chart1.ChartAreas[0].AxisX.Interval = 1;
-            chart1.ChartAreas[0].AxisY.Interval = 1;
+            chart1.ChartAreas[0].AxisY.Interval = 200;
 
             chart1.ChartAreas[0].AxisX.LineColor = Color.Transparent;
-            chart1.ChartAreas[0].AxisY.LineColor = Color.Transparent;
+            chart1.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.LightBlue;
 
-            chart1.ChartAreas[0].AxisY.ScrollBar.Size = 10;
+            chart1.ChartAreas[0].AxisY.ScrollBar.Size = 5;
             chart1.ChartAreas[0].AxisY.ScrollBar.ButtonStyle = ScrollBarButtonStyles.SmallScroll;
             chart1.ChartAreas[0].AxisY.ScrollBar.IsPositionedInside = true;
             chart1.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
@@ -144,7 +165,7 @@ namespace SensorDisplay
 
             chart1.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
             chart1.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
-            chart1.ChartAreas[0].AxisX.ScaleView.Size = 500; //la porcion o cantidad de muestras que se ven en pantalla
+            chart1.ChartAreas[0].AxisX.ScaleView.Size = 300; //la porcion o cantidad de muestras que se ven en pantalla
 
             ComPortComboBox.Items.Clear(); // proceso para cargar los puertos disponibles
             string[] ports = SerialPort.GetPortNames();
@@ -152,7 +173,7 @@ namespace SensorDisplay
             {
                 ComPortComboBox.Items.Add(port);
             }
-            if (ports[0] != null)
+            if (ports.Length >= 1)
             {
                 ComPortComboBox.Text = ports[0];
             }
@@ -164,8 +185,11 @@ namespace SensorDisplay
         {
             if (aSerialPort.IsOpen)
             {
+                
                 Thread CloseSerial = new Thread(new ThreadStart(CloseSerialm)); //close port in new thread to avoid hang
                 CloseSerial.Start(); //close port in new thread to avoid hang
+                count = 100;
+                timer = 0;
                 LOG.BeginInvoke((MethodInvoker)delegate { LOG.AppendText("Prueba Detenida \n"); });
                 // pruebaencurso = false;
             }
@@ -237,13 +261,22 @@ namespace SensorDisplay
         // el cambio de texto en la combobox cambia el puerto de la comunicacion serial
         private void ComPortComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            aSerialPort.PortName = ComPortComboBox.Text;
+            try
+            {
+                aSerialPort.PortName = ComPortComboBox.Text;
+            }
+            catch
+            {
+                LOG.BeginInvoke((MethodInvoker)delegate { LOG.AppendText("Error, Prueba en curso \n"); });
+            }
         }
 
         private void ClearButton_Click(object sender, EventArgs e)
         {
             recorded.Clear();
             chart1.Series["Series1"].Points.Clear();
+            count = 100;
+            timer = 0;
             LOG.BeginInvoke((MethodInvoker)delegate { LOG.AppendText("Datos despejados \n"); });
         }
 
