@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.LOG = new System.Windows.Forms.RichTextBox();
             this.StartButton = new System.Windows.Forms.Button();
@@ -46,7 +46,6 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.label2 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,8 +55,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.RefreshButton = new System.Windows.Forms.Button();
+            this.zoomout = new System.Windows.Forms.Button();
+            this.zoomin = new System.Windows.Forms.Button();
+            this.timerangelabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,22 +68,22 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chart1.BackImageAlignment = System.Windows.Forms.DataVisualization.Charting.ChartImageAlignmentStyle.Top;
             this.chart1.BorderSkin.BackColor = System.Drawing.Color.Transparent;
-            chartArea1.CursorX.LineColor = System.Drawing.Color.Black;
-            chartArea1.CursorX.SelectionColor = System.Drawing.Color.Black;
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            chartArea4.CursorX.LineColor = System.Drawing.Color.Black;
+            chartArea4.CursorX.SelectionColor = System.Drawing.Color.Black;
+            chartArea4.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chart1.Legends.Add(legend4);
             this.chart1.Location = new System.Drawing.Point(43, 33);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series1.Color = System.Drawing.Color.Black;
-            series1.IsVisibleInLegend = false;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series4.Color = System.Drawing.Color.Black;
+            series4.IsVisibleInLegend = false;
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.chart1.Series.Add(series4);
             this.chart1.Size = new System.Drawing.Size(1573, 398);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -90,10 +91,10 @@
             // LOG
             // 
             this.LOG.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.LOG.Location = new System.Drawing.Point(622, 485);
+            this.LOG.Location = new System.Drawing.Point(619, 562);
             this.LOG.Name = "LOG";
             this.LOG.ReadOnly = true;
-            this.LOG.Size = new System.Drawing.Size(516, 208);
+            this.LOG.Size = new System.Drawing.Size(516, 223);
             this.LOG.TabIndex = 1;
             this.LOG.Text = "";
             this.LOG.TextChanged += new System.EventHandler(this.LOG_TextChanged);
@@ -200,21 +201,11 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(629, 434);
+            this.label2.Location = new System.Drawing.Point(631, 525);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(38, 17);
             this.label2.TabIndex = 12;
             this.label2.Text = "LOG";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.pictureBox1.Location = new System.Drawing.Point(844, 722);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(157, 113);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 13;
-            this.pictureBox1.TabStop = false;
             // 
             // menuStrip1
             // 
@@ -239,14 +230,14 @@
             // openFileToolStripMenuItem
             // 
             this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
-            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(145, 26);
             this.openFileToolStripMenuItem.Text = "Abrir";
             this.openFileToolStripMenuItem.Click += new System.EventHandler(this.openFileToolStripMenuItem_Click);
             // 
             // guardarToolStripMenuItem
             // 
             this.guardarToolStripMenuItem.Name = "guardarToolStripMenuItem";
-            this.guardarToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.guardarToolStripMenuItem.Size = new System.Drawing.Size(145, 26);
             this.guardarToolStripMenuItem.Text = "Guardar";
             this.guardarToolStripMenuItem.Click += new System.EventHandler(this.guardarToolStripMenuItem_Click);
             // 
@@ -300,17 +291,48 @@
             this.RefreshButton.UseVisualStyleBackColor = true;
             this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
             // 
+            // zoomout
+            // 
+            this.zoomout.Location = new System.Drawing.Point(634, 454);
+            this.zoomout.Name = "zoomout";
+            this.zoomout.Size = new System.Drawing.Size(209, 55);
+            this.zoomout.TabIndex = 20;
+            this.zoomout.Text = "<<<<     ALEJAR     >>>>";
+            this.zoomout.UseVisualStyleBackColor = true;
+            this.zoomout.Click += new System.EventHandler(this.zoomout_Click);
+            // 
+            // zoomin
+            // 
+            this.zoomin.Location = new System.Drawing.Point(926, 454);
+            this.zoomin.Name = "zoomin";
+            this.zoomin.Size = new System.Drawing.Size(209, 55);
+            this.zoomin.TabIndex = 21;
+            this.zoomin.Text = ">>>>     AMPLIAR     <<<<";
+            this.zoomin.UseVisualStyleBackColor = true;
+            this.zoomin.Click += new System.EventHandler(this.zoomin_Click);
+            // 
+            // timerangelabel
+            // 
+            this.timerangelabel.AutoSize = true;
+            this.timerangelabel.Location = new System.Drawing.Point(869, 473);
+            this.timerangelabel.Name = "timerangelabel";
+            this.timerangelabel.Size = new System.Drawing.Size(27, 17);
+            this.timerangelabel.TabIndex = 22;
+            this.timerangelabel.Text = "3 s";
+            // 
             // EEGForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1818, 870);
+            this.Controls.Add(this.timerangelabel);
+            this.Controls.Add(this.zoomin);
+            this.Controls.Add(this.zoomout);
             this.Controls.Add(this.RefreshButton);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.ScreenTextBox);
             this.Controls.Add(this.ScreenShotButton);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.TagButton);
             this.Controls.Add(this.TagTextBox);
@@ -329,7 +351,6 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load_1);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -353,7 +374,6 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
@@ -363,6 +383,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button RefreshButton;
+        private System.Windows.Forms.Button zoomout;
+        private System.Windows.Forms.Button zoomin;
+        private System.Windows.Forms.Label timerangelabel;
     }
 }
 

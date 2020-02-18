@@ -22,6 +22,7 @@ namespace SensorDisplay
         String tag = null; // etiqueta actual a colocar
         int count = 100;
         int timer = 0;
+        int timerange = 300;
         private void StartButton_Click(object sender, EventArgs e)
         {
 
@@ -54,14 +55,14 @@ namespace SensorDisplay
                     recorded.Add(data);
                     timer++;
                     count = 0;
-                    chart1.ChartAreas[0].AxisX.ScaleView.Position = chart1.Series["Series1"].Points.Count - 300;
+                    chart1.ChartAreas[0].AxisX.ScaleView.Position = chart1.Series["Series1"].Points.Count - timerange;
                 }
                 else
                 {
                     count++;
                     chart1.Series["Series1"].Points.AddXY(data.etiqueta, data.numvalor);
                     recorded.Add(data);
-                    chart1.ChartAreas[0].AxisX.ScaleView.Position = chart1.Series["Series1"].Points.Count - 300;// ubica siempre la pantalla al final
+                    chart1.ChartAreas[0].AxisX.ScaleView.Position = chart1.Series["Series1"].Points.Count - timerange;// ubica siempre la pantalla al final
                 }
                 
             }
@@ -151,6 +152,7 @@ namespace SensorDisplay
             chart1.ChartAreas[0].AxisY.MajorGrid.LineWidth = 1;
             chart1.ChartAreas[0].AxisX.MajorGrid.LineWidth = 0;
 
+            chart1.ChartAreas[0].AxisX.LabelAutoFitMaxFontSize = 20;
             chart1.ChartAreas[0].AxisX.Interval = 1;
             chart1.ChartAreas[0].AxisY.Interval = 200;
 
@@ -165,7 +167,7 @@ namespace SensorDisplay
 
             chart1.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
             chart1.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
-            chart1.ChartAreas[0].AxisX.ScaleView.Size = 300; //la porcion o cantidad de muestras que se ven en pantalla
+            chart1.ChartAreas[0].AxisX.ScaleView.Size = timerange; //la porcion o cantidad de muestras que se ven en pantalla
 
             ComPortComboBox.Items.Clear(); // proceso para cargar los puertos disponibles
             string[] ports = SerialPort.GetPortNames();
@@ -200,7 +202,7 @@ namespace SensorDisplay
         {
             if (aSerialPort.IsOpen)
             {
-                aSerialPort.WriteLine("a");
+                aSerialPort.Write("a");
                 tag = "shock";
             }
             else
@@ -404,6 +406,28 @@ namespace SensorDisplay
             }
             
         }
+
+        private void zoomin_Click(object sender, EventArgs e)
+        {
+            if (timerange > 100)
+            { 
+                timerange = timerange - 100;
+                chart1.ChartAreas[0].AxisX.ScaleView.Size = timerange;
+                timerangelabel.Text = (timerange/100 + " s");
+            }
+        }
+
+        private void zoomout_Click(object sender, EventArgs e)
+        {
+            if (timerange < 1000)
+            {
+                timerange = timerange + 100;
+                chart1.ChartAreas[0].AxisX.ScaleView.Size = timerange;
+                timerangelabel.Text = (timerange/100 + " s");
+            }
+        }
+
+       
     }
    
         
