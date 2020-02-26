@@ -321,8 +321,8 @@ namespace SensorDisplay
                                 {
                                     string[] datos = reading.Split(',');
                                     double data;
-                                    Double.TryParse(datos[0], out data);
-                                    mediciones.Add(new medicion(datos[0], datos[1], data));
+                                    Double.TryParse(datos[1], out data);
+                                    mediciones.Add(new medicion(datos[1], datos[2], data));
                                   
                                 }
                                 updatechart(mediciones);
@@ -358,9 +358,22 @@ namespace SensorDisplay
                     }
                     using (StreamWriter sw = File.CreateText(saveFileDialog1.FileName))
                     {
+                        int i = 0;
+                        double suma = 0;
                         foreach (medicion m in recorded)
                         {
-                            sw.WriteLine(m.valor.TrimEnd() + "," + m.etiqueta);
+                            if (i % 1000 == 0)
+                            {
+                                sw.WriteLine(i + "," + m.valor.TrimEnd() + "," + m.etiqueta+","+suma);
+                                suma = 0;
+                                i=i+10;
+                            }
+                            else
+                            {
+                                suma = suma + m.numvalor;
+                                sw.WriteLine(i + "," + m.valor.TrimEnd() + "," + m.etiqueta);
+                                i=i+10;
+                            }
                         }
                     }
                 }

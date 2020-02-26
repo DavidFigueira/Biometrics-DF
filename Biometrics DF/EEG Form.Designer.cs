@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.LOG = new System.Windows.Forms.RichTextBox();
             this.StartButton = new System.Windows.Forms.Button();
@@ -68,22 +68,22 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chart1.BackImageAlignment = System.Windows.Forms.DataVisualization.Charting.ChartImageAlignmentStyle.Top;
             this.chart1.BorderSkin.BackColor = System.Drawing.Color.Transparent;
-            chartArea4.CursorX.LineColor = System.Drawing.Color.Black;
-            chartArea4.CursorX.SelectionColor = System.Drawing.Color.Black;
-            chartArea4.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chart1.Legends.Add(legend4);
+            chartArea1.CursorX.LineColor = System.Drawing.Color.Black;
+            chartArea1.CursorX.SelectionColor = System.Drawing.Color.Black;
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(43, 33);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series4.Color = System.Drawing.Color.Black;
-            series4.IsVisibleInLegend = false;
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chart1.Series.Add(series4);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series1.Color = System.Drawing.Color.Black;
+            series1.IsVisibleInLegend = false;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(1573, 398);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -106,7 +106,7 @@
             this.StartButton.Name = "StartButton";
             this.StartButton.Size = new System.Drawing.Size(228, 51);
             this.StartButton.TabIndex = 2;
-            this.StartButton.Text = "START";
+            this.StartButton.Text = "INICIO PRUEBA";
             this.StartButton.UseVisualStyleBackColor = true;
             this.StartButton.Click += new System.EventHandler(this.StartButton_Click);
             // 
@@ -117,7 +117,7 @@
             this.StopButton.Name = "StopButton";
             this.StopButton.Size = new System.Drawing.Size(228, 51);
             this.StopButton.TabIndex = 3;
-            this.StopButton.Text = "STOP";
+            this.StopButton.Text = "DETENER PRUEBA";
             this.StopButton.UseVisualStyleBackColor = true;
             this.StopButton.Click += new System.EventHandler(this.StopButton_Click);
             // 
@@ -128,7 +128,7 @@
             this.ShockButton.Name = "ShockButton";
             this.ShockButton.Size = new System.Drawing.Size(228, 51);
             this.ShockButton.TabIndex = 4;
-            this.ShockButton.Text = "Shock";
+            this.ShockButton.Text = "ESTÍMULO";
             this.ShockButton.UseVisualStyleBackColor = true;
             this.ShockButton.Click += new System.EventHandler(this.ShockButton_Click);
             // 
@@ -165,7 +165,7 @@
             this.ClearButton.Name = "ClearButton";
             this.ClearButton.Size = new System.Drawing.Size(228, 51);
             this.ClearButton.TabIndex = 7;
-            this.ClearButton.Text = "Clear";
+            this.ClearButton.Text = "DESPEJAR";
             this.ClearButton.UseVisualStyleBackColor = true;
             this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
             // 
@@ -184,7 +184,7 @@
             this.TagButton.Name = "TagButton";
             this.TagButton.Size = new System.Drawing.Size(228, 51);
             this.TagButton.TabIndex = 9;
-            this.TagButton.Text = "Etiqueta";
+            this.TagButton.Text = "ETIQUETA";
             this.TagButton.UseVisualStyleBackColor = true;
             this.TagButton.Click += new System.EventHandler(this.TagButton_Click);
             // 
@@ -214,7 +214,7 @@
             this.testToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1818, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1818, 30);
             this.menuStrip1.TabIndex = 14;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -224,7 +224,7 @@
             this.openFileToolStripMenuItem,
             this.guardarToolStripMenuItem});
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(73, 24);
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(73, 26);
             this.testToolStripMenuItem.Text = "Archivo";
             // 
             // openFileToolStripMenuItem
@@ -248,7 +248,7 @@
             this.ScreenShotButton.Name = "ScreenShotButton";
             this.ScreenShotButton.Size = new System.Drawing.Size(228, 46);
             this.ScreenShotButton.TabIndex = 15;
-            this.ScreenShotButton.Text = "Captura de Pantalla";
+            this.ScreenShotButton.Text = "CAPTURA DE PANTALLA";
             this.ScreenShotButton.UseVisualStyleBackColor = true;
             this.ScreenShotButton.Click += new System.EventHandler(this.ScreenShot_Click);
             // 
